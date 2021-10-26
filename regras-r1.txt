@@ -1,4 +1,5 @@
 iptables -P INPUT DROP
 iptables -A INPUT -p tcp --sport 22 -j ACCEPT
-iptables -t nat -A POSTROUTING -o eth3 -j MASQUERADE
+iptables -A INPUT -i eth1 -j ACCEPT
 iptables -A FORWARD -i eth1 ! -d 172.17.0.2 -j REJECT
+iptables -t nat -A POSTROUTING -o eth3 -j MASQUERADE
