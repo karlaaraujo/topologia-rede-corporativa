@@ -2,3 +2,9 @@ ifconfig eth0 10.10.10.1/24 up
 
 route add -net 192.168.0.0 netmask 255.255.255.0 gw 10.10.10.5
 route add -net 10.0.0.0 netmask 255.255.255.0 gw 10.0.0.5
+
+iptables -P INPUT DROP
+iptables -A INPUT -p tcp --sport 22 -j ACCEPT
+iptables -A INPUT -i eth1 -j ACCEPT
+iptables -A FORWARD -i eth1 ! -d 172.17.0.2 -j REJECT
+iptables -t nat -A POSTROUTING -o eth3 -j MASQUERADE
